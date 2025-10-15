@@ -4,6 +4,7 @@ import { Icon } from 'leaflet';
 import { Property } from '../types';
 import { useAuth } from '../context/AuthContext';
 import 'leaflet/dist/leaflet.css';
+import { BACKEND_URL } from '../config/api'; // <-- import BACKEND_URL
 
 interface PropertyMapProps {
   properties: Property[];
@@ -27,7 +28,7 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
   onAuthRequired,
 }) => {
   const { isAuthenticated } = useAuth();
-  const [center] = useState<[number, number]>([39.8283, -98.5795]); // Default USA center
+  const [center] = useState<[number, number]>([39.8283, -98.5795]); // Default center
 
   const handleContactClick = (property: Property, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -67,7 +68,11 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
               <Popup>
                 <div className="p-2 min-w-[250px]">
                   <img
-                    src={property.images?.[0] || '/placeholder.jpg'}
+                    src={
+                      property.images?.[0]
+                        ? `${BACKEND_URL}${property.images[0]}`
+                        : '/placeholder.png'
+                    }
                     alt={property.title || 'Untitled'}
                     className="w-full h-32 object-cover rounded-lg mb-2"
                   />

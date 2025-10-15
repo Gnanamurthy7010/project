@@ -27,6 +27,14 @@ export const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({
 
   const BACKEND_URL = "http://localhost:5000";
 
+  // ✅ Utility function to safely get full image URL
+  const getFullImageUrl = (imgPath?: string) => {
+    if (!imgPath) return '/placeholder.png';
+    return imgPath.startsWith('/uploads/')
+      ? `${BACKEND_URL}${imgPath}`
+      : imgPath;
+  };
+
   const handleContact = async () => {
     if (!isAuthenticated) {
       onAuthRequired();
@@ -90,7 +98,7 @@ export const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({
             <div className="relative h-96 rounded-xl overflow-hidden mb-4 bg-gray-100">
               {images.length > 0 ? (
                 <img
-                  src={images[selectedImage] ? `${BACKEND_URL}${images[selectedImage]}` : '/placeholder.png'}
+                  src={getFullImageUrl(images[selectedImage])}
                   alt={property.title}
                   className="w-full h-full object-cover"
                 />
@@ -113,7 +121,11 @@ export const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({
                     onClick={() => setSelectedImage(idx)}
                     className={`h-24 rounded-lg overflow-hidden ${selectedImage === idx ? 'ring-4 ring-blue-600' : ''}`}
                   >
-                    <img src={img ? `${BACKEND_URL}${img}` : '/placeholder.png'} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover hover:scale-110 transition-transform" />
+                    <img
+                      src={getFullImageUrl(img)}
+                      alt={`Thumbnail ${idx + 1}`}
+                      className="w-full h-full object-cover hover:scale-110 transition-transform"
+                    />
                   </button>
                 ))}
               </div>
@@ -174,7 +186,7 @@ export const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({
               <p className="text-gray-600 text-sm">{property.ownerEmail || 'Not available'}</p>
             </div>
 
-            {/* Success/Error Messages */}
+            {/* Messages */}
             {showContactSuccess && (
               <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm">
                 Contact request sent successfully!
@@ -193,11 +205,17 @@ export const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({
 
             {/* Buttons */}
             <div className="flex gap-3">
-              <button onClick={handleContact} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold flex items-center justify-center space-x-2">
+              <button
+                onClick={handleContact}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold flex items-center justify-center space-x-2"
+              >
                 <Mail className="h-5 w-5" />
                 <span>Contact Owner</span>
               </button>
-              <button onClick={handleBook} className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold flex items-center justify-center space-x-2">
+              <button
+                onClick={handleBook}
+                className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold flex items-center justify-center space-x-2"
+              >
                 <Calendar className="h-5 w-5" />
                 <span>Book Viewing</span>
               </button>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Home, Mail, Plus, Edit, Trash2 } from "lucide-react";
-import API_BASE_URL from "../config/api";
+import API_BASE_URL, { BACKEND_URL } from "../config/api"; // BACKEND_URL imported
 import { fetchProperties } from "../services/propertyService";
 import { getEnquiries } from "../services/messageService";
 
@@ -13,7 +13,6 @@ export const Dashboard: React.FC = () => {
   const [properties, setProperties] = useState([]);
   const [enquiries, setEnquiries] = useState([]);
 
-  // Fetch properties and enquiries on mount
   useEffect(() => {
     if (!user || user.role !== "owner") return;
 
@@ -128,8 +127,9 @@ export const Dashboard: React.FC = () => {
                       className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
                     >
                       <div className="flex items-start space-x-4">
+                        {/* Image updated like PropertyCard */}
                         <img
-                          src={property.images?.[0] ? `${API_BASE_URL}${property.images[0]}` : "/placeholder.png"}
+                          src={property.images?.[0] ? `${BACKEND_URL}${property.images[0]}` : "/placeholder.png"}
                           alt={property.title}
                           className="w-24 h-24 object-cover rounded-lg"
                         />
