@@ -41,7 +41,7 @@ export const About: React.FC = () => {
             <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <Home className="h-8 w-8 text-blue-600" />
             </div>
-            <h3 className="text-3xl font-bold text-gray-900 mb-2">5000+</h3>
+            <h3 className="text-3xl font-bold text-gray-900 mb-2">20+</h3>
             <p className="text-gray-600">Properties Listed</p>
           </div>
 
@@ -49,7 +49,7 @@ export const About: React.FC = () => {
             <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <Users className="h-8 w-8 text-green-600" />
             </div>
-            <h3 className="text-3xl font-bold text-gray-900 mb-2">10,000+</h3>
+            <h3 className="text-3xl font-bold text-gray-900 mb-2">10+</h3>
             <p className="text-gray-600">Happy Clients</p>
           </div>
 
@@ -57,7 +57,7 @@ export const About: React.FC = () => {
             <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <Award className="h-8 w-8 text-orange-600" />
             </div>
-            <h3 className="text-3xl font-bold text-gray-900 mb-2">15+</h3>
+            <h3 className="text-3xl font-bold text-gray-900 mb-2">1+</h3>
             <p className="text-gray-600">Years Experience</p>
           </div>
 
@@ -65,7 +65,7 @@ export const About: React.FC = () => {
             <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <TrendingUp className="h-8 w-8 text-purple-600" />
             </div>
-            <h3 className="text-3xl font-bold text-gray-900 mb-2">98%</h3>
+            <h3 className="text-3xl font-bold text-gray-900 mb-2">99.9%</h3>
             <p className="text-gray-600">Success Rate</p>
           </div>
         </div>

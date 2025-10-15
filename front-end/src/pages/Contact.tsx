@@ -102,7 +102,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">Office</h3>
             <p className="text-gray-600">Visit us</p>
-            <p className="text-orange-600 font-semibold mt-2">123 Real Estate Ave, NY 10001</p>
+            <p className="text-orange-600 font-semibold mt-2">Adhiyamaan college of engineering, Hosur - 635130 </p>
           </div>
         </div>
 

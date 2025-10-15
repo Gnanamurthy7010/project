@@ -1,6 +1,7 @@
+// src/services/propertyService.js
 import API_BASE_URL from "../config/api";
 
-// Add a new property
+// ✅ Add a new property
 export const addProperty = async (formData) => {
   const token = localStorage.getItem("token");
 
@@ -20,7 +21,7 @@ export const addProperty = async (formData) => {
   return res.json(); // returns the added property object
 };
 
-// Fetch all properties from backend
+// ✅ Fetch all properties (kept your original function name)
 export const fetchProperties = async () => {
   const res = await fetch(`${API_BASE_URL}/properties`);
   if (!res.ok) {
@@ -29,3 +30,6 @@ export const fetchProperties = async () => {
   }
   return res.json(); // returns array of property objects
 };
+
+// ✅ Added alias for compatibility with Home.tsx
+export const getProperties = fetchProperties;

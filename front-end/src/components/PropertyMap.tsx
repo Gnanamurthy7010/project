@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import { Property } from '../types';
 import { useAuth } from '../context/AuthContext';
 import 'leaflet/dist/leaflet.css';
-import { BACKEND_URL } from '../config/api'; // <-- import BACKEND_URL
+import { BACKEND_URL } from '../config/api';
 
 interface PropertyMapProps {
   properties: Property[];
@@ -28,7 +28,9 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
   onAuthRequired,
 }) => {
   const { isAuthenticated } = useAuth();
-  const [center] = useState<[number, number]>([39.8283, -98.5795]); // Default center
+
+  // Always center in India
+  const INDIA_CENTER: [number, number] = [20.5937, 78.9629];
 
   const handleContactClick = (property: Property, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -42,8 +44,8 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
   return (
     <div className="h-full w-full rounded-xl overflow-hidden shadow-lg">
       <MapContainer
-        center={center}
-        zoom={4}
+        center={INDIA_CENTER}
+        zoom={5} // adjust zoom as needed
         style={{ height: '100%', width: '100%' }}
         scrollWheelZoom={true}
       >

@@ -1,30 +1,52 @@
-import React, { useState } from 'react';
-import { TrendingUp, Shield, Award } from 'lucide-react';
-import { PropertyCard } from '../components/PropertyCard';
-import { PropertyDetailModal } from '../components/PropertyDetailModal';
-import { AuthRequiredModal } from '../components/AuthRequiredModal';
-import { properties } from '../data/properties';
-import { Property } from '../types';
+import React, { useState, useEffect } from "react";
+import { TrendingUp, Shield, Award } from "lucide-react";
+import { PropertyCard } from "../components/PropertyCard";
+import { PropertyDetailModal } from "../components/PropertyDetailModal";
+import { AuthRequiredModal } from "../components/AuthRequiredModal";
+import { getProperties } from "../services/propertyService";
+import { Property } from "../types";
+import { useNavigate } from "react-router-dom";
 
 interface HomeProps {
   onAuthClick: () => void;
 }
 
 export const Home: React.FC<HomeProps> = ({ onAuthClick }) => {
+  const [properties, setProperties] = useState<Property[]>([]);
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [showAuthRequired, setShowAuthRequired] = useState(false);
+  const navigate = useNavigate();
 
-  const featuredProperties = properties;
+  // ✅ Fetch properties from backend
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getProperties();
+        setProperties(data);
+      } catch (error) {
+        console.error("Error loading properties:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // ✅ Only show 3 featured properties on home page
+  const featuredProperties = properties.slice(0, 3);
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* HERO SECTION */}
       <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 text-white py-24 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{
-            backgroundImage: 'url(https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1920)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }} />
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                "url(https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1920)",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -39,6 +61,7 @@ export const Home: React.FC<HomeProps> = ({ onAuthClick }) => {
         </div>
       </section>
 
+      {/* FEATURES SECTION */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -75,36 +98,42 @@ export const Home: React.FC<HomeProps> = ({ onAuthClick }) => {
         </div>
       </section>
 
+      {/* FEATURED PROPERTIES SECTION */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Featured Properties</h2>
             <p className="text-xl text-gray-600">
-              Explore our handpicked selection of premium properties
+              Explore our top 3 premium properties
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProperties.map((property) => (
-              <PropertyCard
-                key={property.id}
-                property={property}
-                onClick={() => setSelectedProperty(property)}
-              />
-            ))}
-          </div>
+          {featuredProperties.length === 0 ? (
+            <p className="text-center text-gray-500">No properties available.</p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {featuredProperties.map((property) => (
+                <PropertyCard
+                  key={property._id || property.id}
+                  property={property}
+                  onClick={() => setSelectedProperty(property)}
+                />
+              ))}
+            </div>
+          )}
 
           <div className="text-center mt-12">
-            <a
-              href="/properties"
+            <button
+              onClick={() => navigate("/properties")}
               className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors shadow-md hover:shadow-lg"
             >
               View All Properties
-            </a>
+            </button>
           </div>
         </div>
       </section>
 
+      {/* MODALS */}
       <PropertyDetailModal
         property={selectedProperty}
         isOpen={!!selectedProperty}
