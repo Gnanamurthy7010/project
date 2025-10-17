@@ -155,11 +155,13 @@ export const AddProperty: React.FC = () => {
                 onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                 className="w-full border border-gray-300 rounded-lg p-3"
               >
-                <option value="apartment">Apartment</option>
-                <option value="house">House</option>
-                <option value="villa">Villa</option>
+                <option value="apartment">Day Booking</option>
+                <option value="house">Sale</option>
+                <option value="villa">Villa Stay</option>
                 <option value="office">Office</option>
                 <option value="Rental">Rental</option>
+                
+
               </select>
             </div>
 
